@@ -47,9 +47,9 @@ const PostQuery = () => {
       console.log(error);
     }
   }
-  useEffect(() => [
+  useEffect(() => {
     get()
-  ], [])
+  }, [])
   let [fontsLoaded, fontError] = useFonts({
     Inter_900Black,
     Inter_400Regular,
