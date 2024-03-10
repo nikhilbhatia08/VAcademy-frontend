@@ -1,4 +1,6 @@
 {
+  "name": "Vacademy",
+  "displayName": "Vacademy",
   "expo": {
     "name": "Vacademy",
     "slug": "Vacademy",
@@ -15,16 +17,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.bhatianikhil551.Vacademy"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.bhatianikhil551.Vacademy"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5b2ed863-95eb-4743-bd71-b07adcdae5b3"
+      }
     }
   }
 }
