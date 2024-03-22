@@ -9,6 +9,8 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { GET_COURSE } from '../components/utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BOUGHT_COURSE } from '../components/utils';
 //import  RazorpayCheckout  from 'react-native-razorpay';
 
 const { height, width } = Dimensions.get('window');
@@ -82,19 +84,46 @@ const UnregisteredCourse = (props) => {
         return null;
     }
 
-    const onPressBuy = () => {
-        console.log(RazorpayCheckout.default)
-          RazorpayCheckout.default.open(options)
-            .then((data) => {
-              // handle success
-              alert(`Success: ${data.razorpay_payment_id}`);
-            })
-            .catch((error) => {
-              // handle failure
-              alert(`Error: ${error.code} | ${error.description}`);
-              console.log(error)
-            });
+    const onPressBuy = async() => {
+        // console.log(RazorpayCheckout.default)
+        //   RazorpayCheckout.default.open(options)
+        //     .then((data) => {
+        //       // handle success
+        //       alert(`Success: ${data.razorpay_payment_id}`);
+        //     })
+        //     .catch((error) => {
+        //       // handle failure
+        //       alert(`Error: ${error.code} | ${error.description}`);
+        //       console.log(error)
+        //     });
+        // for now temporarily im directly adding the course to the user
+        const user = await AsyncStorage.getItem('user');
+        //console.log(JSON.parse(user))
+        const id = JSON.parse(user).id;
+        // after the successfull payment the course will be added to the user
+        // add the payment logic here 
+        try{
+            const CourseData = {
+                id: id,
+                cid: data._id,
+                cname: data.course_name,
+                cinstructor: data.instructor,
+                cimage: data.img_url,
+            }
+            const res = await axios.put(BOUGHT_COURSE, CourseData);
+            console.log(res.data)
+            if(res.status === 200) {
+                alert('Course Bought');
+                navigation.navigate('Home');
+            }
+            
+        }
+        catch(error) {
+            console.log(error)
+        }
+
     }
+
 
     const slide = () => {
         Animated.timing(fadeAnim, {
@@ -190,8 +219,8 @@ const UnregisteredCourse = (props) => {
                 >
                     <TouchableOpacity
                         onPress={() => {
-                            // onPressBuy();
-                            navigation.navigate('payment')
+                            onPressBuy();
+                            //navigation.navigate('payment')
                         }}
                     >
                         <View className="flex-row justify-center mx-1 px-5 py-3 bg-blue-500 rounded-sm">

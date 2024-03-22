@@ -24,6 +24,7 @@ const CourseCard = (props) => {
     <TouchableOpacity
         onPress={()=>{
             navigation.navigate('Course', {
+                id: props.id,
                 title: props.Title,
                 imgUrl: props.imgUrl,
             })
