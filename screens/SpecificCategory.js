@@ -50,7 +50,7 @@ const Featured_courses = [
 ]
 
 const SpecificCategory = (props) => {
-    //console.log(props.route.params.category)
+    //console.log(props.route.params.category.name)
     // works perfectly fine 
     const navigation = useNavigation();
     let [fontsLoaded, fontError] = useFonts({
@@ -86,7 +86,7 @@ const SpecificCategory = (props) => {
                 </GestureHandlerRootView>
       </View>
       <View className="mt-5 flex-col ml-4">
-          <Text className="text-3xl" style={{fontFamily: "Inter_600SemiBold"}}>{props.route.params.category}</Text>
+          <Text className="text-3xl" style={{fontFamily: "Inter_600SemiBold"}}>{props.route.params.category.name}</Text>
           <View className="mt-4">
             {
               <View className="">

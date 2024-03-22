@@ -63,7 +63,6 @@ const UnregisteredCourse = (props) => {
             try{
                 const res = await axios.get(GET_COURSE + props.route.params.id);
                 setData(res.data);
-                console.log(res.data)
                 setCobs(res.data.courseobjs);
             }
             catch(error) {
