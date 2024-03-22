@@ -10,7 +10,6 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { GET_COURSE } from '../components/utils';
 //import  RazorpayCheckout  from 'react-native-razorpay';
-const RazorpayCheckout =  require('react-native-razorpay');
 
 const { height, width } = Dimensions.get('window');
 
