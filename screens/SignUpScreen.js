@@ -12,6 +12,7 @@ const SignUpScreen = () => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const [repass, setRePass] = useState('');
+    const [college, setCollege] = useState('');
 
     const signup = async() => {
         if(pass !== repass) {
@@ -20,13 +21,14 @@ const SignUpScreen = () => {
         }
         try {
             const res = await axios.post(REGISTER_API, {
-            name: name,
-            email: email,
-            password: pass,
+                name: name,
+                email: email,
+                password: pass,
+                college: college
             });
             if(res.status === 200) {
                 alert('User Created');
-                console.log(JSON.parse(res)._response)
+                //console.log(JSON.parse(res)._response)
                 navigation.navigate('Login');
             }
             
@@ -68,6 +70,11 @@ const SignUpScreen = () => {
             <GestureHandlerRootView className="mt-4">
                 <TextInput keyboardType='default' className='text-xl w-80 border-y-2 border-x-2 border-blue-500 rounded-md p-4 text-blue-500' style={{fontFamily: 'Inter_400Regular'}} placeholder='Re-Enter Password'
                     onChangeText={(text) => {setRePass(text)}}
+                />
+            </GestureHandlerRootView>
+            <GestureHandlerRootView className="mt-4">
+                <TextInput keyboardType='default' className='text-xl w-80 border-y-2 border-x-2 border-blue-500 rounded-md p-4 text-blue-500' style={{fontFamily: 'Inter_400Regular'}} placeholder='Enter College name'
+                    onChangeText={(text) => {setCollege(text)}}
                 />
             </GestureHandlerRootView>
             <TouchableOpacity className="mt-5 rounded-md p-4 w-80 flex-col items-center bg-blue-500"

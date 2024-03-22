@@ -1,4 +1,4 @@
-export const BASE_URL = process.env.NODE_ENV === 'production' ? 'https://vacademy-production.up.railway.app' : process.env.BACKEND_SLUG ?? 'http://192.168.0.248:3000'
+export const BASE_URL = 'https://vacademy-production.up.railway.app'
 
 export const LOGIN_API = BASE_URL + '/User/Login'
 
