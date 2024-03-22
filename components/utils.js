@@ -1,5 +1,4 @@
-//export const BASE_URL = 'https://vacademy-production.up.railway.app'
-export const BASE_URL = 'http://192.168.0.248:3000'
+export const BASE_URL = 'https://vacademy-production.up.railway.app'
 
 export const LOGIN_API = BASE_URL + '/User/Login'
 
