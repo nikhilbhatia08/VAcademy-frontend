@@ -7,74 +7,11 @@ import { useFonts, Inter_900Black, Inter_100Thin, Inter_400Regular, Inter_600Sem
 import React, {useState, useRef, useEffect} from 'react';      
 import { Video, ResizeMode } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import axios from 'axios';
+import { GET_COURSE } from '../components/utils';
 
 
 const { height, width } = Dimensions.get('window');
-
-let present_running_video;
-
-const sections = [
-    {
-        section_title: "Sectoion-1 ReadMe: Basic Information",
-        lectures: [
-            {
-                title: "Introduction to the Course",
-                duration: "2:30",
-                video_url: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
-            },
-            {
-                title: "What is Python?",
-                duration: "4:30",
-                video_url: "https://v5.cdnpk.net/videvo_files/video/premium/video0521/large_watermarked/GENERAL_SA_AERIAL_00080_preview.mp4"
-            },
-            {
-                title: "Why Python?",
-                duration: "3:30",
-                video_url: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
-            }
-        ]
-    },
-    {
-        section_title: "Section-2 Python Basics",
-        lectures: [
-            {
-                title: "Python Installation",
-                duration: "2:30",
-                video_url: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
-            },
-            {
-                title: "Python Basics",
-                duration: "4:30",
-                video_url: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
-            },
-            {
-                title: "Python Variables",
-                duration: "3:30",
-                video_url: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
-            }
-        ]
-    },
-    {
-        section_title: "Section-3 Python Advanced",
-        lectures: [
-            {
-                title: "Python Functions",
-                duration: "2:30",
-                video_url: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
-            },
-            {
-                title: "Python Classes",
-                duration: "4:30",
-                video_url: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
-            },
-            {
-                title: "Python Inheritance",
-                duration: "3:30",
-                video_url: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
-            }
-        ]
-    }
-]
 
 function setOrientation() {
     if (Dimensions.get('window').height > Dimensions.get('window').width) {
@@ -97,9 +34,26 @@ const Course = (props) => {
     const playbackInstance = useRef(null);
     const video = React.useRef(null);
     const [status, setStatus] = React.useState({});
-    const [focused, setFocused] = useState(0);
-    
-    const [vid, setVid] = useState(sections[0].lectures[0]);
+    const [focused, setFocused] = useState(0)
+    const [sections, setSections] = useState([]);
+    const [vid, setVid] = useState('');
+
+    const handleFetch = async() => {
+        try {
+            const res = await axios.get(GET_COURSE + props.route.params.id);
+            console.log(res.data);
+            setSections(res.data.sections)
+            setVid(res.data.sections[0].lectures[0].video_url.url);
+            console.log(sections);
+        }
+        catch(error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        handleFetch();
+    }, []);
 
     let [fontsLoaded, fontError] = useFonts({
         Inter_900Black,
@@ -112,6 +66,8 @@ const Course = (props) => {
         return null;
     }
   return (
+    <>
+    {sections.length === 0 ? <Text>Loading...</Text> : null}
     <SafeAreaView className="bg-white">
         <View className=" pt-12 pb-4 flex-row bg-blue-500 items-center pl-4">
             <GestureHandlerRootView>
@@ -133,7 +89,7 @@ const Course = (props) => {
                 ref={video}
                 style={styles.video}
                 source={{
-                    uri: vid.video_url,
+                    uri: vid,
                 }}
                 onFullscreenUpdate={setOrientation}
                 videoStyle={{resizeMode: 'contain'}}
@@ -217,7 +173,8 @@ const Course = (props) => {
                                         return (
                                             <TouchableOpacity
                                                 onPress={() => {
-                                                    setVid(lecture);                                 
+                                                    setVid(lecture.video_url.url);   
+                                                    console.log(lecture.video_url.url)                              
                                                 }}
                                                 key={index}
                                             >
@@ -251,6 +208,7 @@ const Course = (props) => {
         </View>
         </View>
     </SafeAreaView>
+    </>
   )
 }
 
