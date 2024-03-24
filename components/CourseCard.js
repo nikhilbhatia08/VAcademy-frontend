@@ -37,8 +37,8 @@ const CourseCard = (props) => {
                 }}
                 className='mt-4 mx-2 h-20 w-32 rounded-md'
             />
-            <View className="mt-2 ml-2 flex-col ">
-                <Text className="text-blue-500 text-2xl" style={{fontFamily: 'Inter_600SemiBold'}}>{props.Title}</Text>
+            <View className="mt-2 ml-2 flex-col flex-shrink">
+                <Text numberOfLines={1} className="text-blue-500 text-2xl" style={{fontFamily: 'Inter_600SemiBold'}}>{props.Title}</Text>
                 <View className="flex-row items-center mt-2">
                     <Icons.UserCircleIcon className="text-gray-400" size={19}/>
                     <Text className="text-gray-400">Patrecia Jones</Text>
